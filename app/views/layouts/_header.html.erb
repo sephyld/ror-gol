@@ -1,0 +1,26 @@
+<nav class="sm:fixed sm:top-0 w-screen sm:h-24 shadow-sm text-white bg-slate-800 flex flex-row justify-between gap-4 p-8 items-center">
+  <%= link_to root_path, title: "Game Of Life - Home" do %>
+  <div>
+    <h1 class="text-4xl font-bold">
+      Game Of Life
+    </h1>
+    <h2 class="text-lg font-semibold">
+      Built with Ruby on rails
+    </h2>
+  </div>
+  <% end %>
+  <ul class="flex flex-row justify-between gap-4 items-center">
+    <% if user_signed_in? %>
+      <li>
+        Welcome <%= current_user.email %>
+      </li>
+      <li class="hover:font-bold" >
+        <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+      </li>
+    <% else %>
+      <li>
+        <%= link_to "Sign in", new_user_session_path %>
+      </li>
+    <% end %>
+  </ul>
+</nav>

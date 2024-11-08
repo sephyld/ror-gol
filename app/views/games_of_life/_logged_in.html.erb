@@ -1,0 +1,24 @@
+<div class="grid grid-cols-2 gap-8 w-full">
+  <div class="col-span-2 lg:col-span-1 enclosed">
+    <%= form_with method: :post, url: post_file_gol_path, multipart: true, class: "flex flex-col gap-2" do |form| %>
+      <%= render "games_of_life/error_msg" %>
+      <div>
+        <%= form.label :state_file %>
+        <%= file_field_tag :state_file, id: "file_upload"  %>
+      </div>
+      <div>
+        <%= button_tag "Submit", class: "btn" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-span-2 lg:col-span-1 enclosed">
+    <%= form_with method: :post, url: post_random_gol_path, multipart: true do |form| %>
+      <%= button_tag "Generate random", class: "btn" %>
+    <% end %>
+  </div>
+  <div class="col-span-2 enclosed">
+    <%= turbo_frame_tag "grid_turbo_frame_tag" do %>
+      Here goes the game of life :)
+    <% end %>
+  </div>
+</div>

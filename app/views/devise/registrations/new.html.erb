@@ -1,0 +1,11 @@
+<div class="w-full">
+  <%= render "devise/shared/error_messages", resource: resource %>
+  <div class="w-full grid grid-cols-2 gap-4">
+    <div class="col-span-2 lg:col-span-1 bg-slate-300 enclosed">
+      <%= render "devise/registrations/log_in" %>
+    </div>
+    <div class="col-span-2 lg:col-span-1 enclosed">
+      <%= render "devise/registrations/sign_up" %>
+    </div>
+  </div>
+</div>

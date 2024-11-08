@@ -1,0 +1,28 @@
+<%= form_with id: "form_play", data: { play_target: "form" }, url: post_next_generation_path do |form| %>
+  <div class="flex flex-col gap-2">
+    <div>
+      Generation <%= @game_state.generation %>:
+      <%=form.text_field :generation, value: @game_state.generation, hidden: true %>
+    </div>
+    <div>
+      <%= @game_state.rows %> <%= @game_state.columns %>
+      <%=form.text_field :rows, value: @game_state.rows, hidden: true %>
+      <%=form.text_field :columns, value: @game_state.columns, hidden: true %>
+    </div>
+    <%=form.text_field :layed_down_grid, value: @game_state.lay_down_grid, hidden: true %>
+    <table>
+      <tbody>
+        <% @game_state.grid.each_with_index do |row, i| %>
+          <tr>
+            <% row.each_with_index do |cell, j| %>
+              <% cell_color = cell.is_alive? ? 'black' : 'white' %>
+              <td style="width: 10px; height: 10px; background: <%= cell_color %>; border: solid 1px black">
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= form.submit "submit", hidden: true, id: "submit_btn", data: {play_target: "sub"} %>
+  </div>
+<% end %>

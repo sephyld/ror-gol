@@ -1,0 +1,5 @@
+<%= turbo_stream.replace "canvas" do %>
+  <%= turbo_frame_tag "canvas" do %>
+    <%= render "games_of_life/form" %>
+  <% end %>
+<% end %>

@@ -1,0 +1,5 @@
+<% if user_signed_in? %>
+  <%= render "games_of_life/logged_in" %>
+<% else %>
+  <%= render "games_of_life/not_logged_in" %>
+<% end %>

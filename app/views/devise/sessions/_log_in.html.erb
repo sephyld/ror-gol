@@ -1,0 +1,25 @@
+<div class="flex flex-col gap-16 justify-end">
+  <h2 class="text-4xl font-bold">Log in</h2>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div class="flex flex-col gap-8">
+      <div class="flex flex-col gap-2">
+        <%= f.label :email, class: "font-semibold" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "focus:border focus:border-slate-500 rounded-xl" %>
+      </div>
+      <div class="flex flex-col gap-2">
+        <%= f.label :password, class: "font-semibold" %>
+        <%= f.password_field :password, autocomplete: "current-password", class: "focus:border focus:border-slate-500 rounded-xl" %>
+      </div>
+      <% if devise_mapping.rememberable? %>
+        <div class="flex flex-col gap-2">
+          <%= f.check_box :remember_me, class: "font-semibold" %>
+          <%= f.label :remember_me %>
+        </div>
+      <% end %>
+      <div class="flex flex-row gap-4 justify-end">
+        <%= f.button "Log in", class: "btn w-full" %>
+        <%= link_to "Sign up ->", new_registration_path(resource_name), class: "btn w-full" %>
+      </div>
+    </div>
+  <% end %>
+</div>
