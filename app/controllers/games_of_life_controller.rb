@@ -1,13 +1,28 @@
 class GamesOfLifeController < ApplicationController
+end
+class GamesOfLifeController < ApplicationController
   before_action :authenticate_user!, except: [ :index ]
 
   def index
   end
 
   def post_file_gol
-    file = handle_file_read
-    return if file == false
-    return if handle_file_upload_error(file) == false
+    begin
+      file = file_post_params
+      handle_file_upload file
+    rescue ActionController::ParameterMissing
+      @message = "File is required"
+      respond_to do |format|
+        format.turbo_stream { render "error_msg", status: 406 }
+      end
+      return
+    rescue GameOfLife::FileValidationError => e
+      @message = e.message
+      respond_to do |format|
+        format.turbo_stream { render "error_msg", status: 406 }
+      end
+      return
+    end
     respond_to do |format|
       format.turbo_stream
     end
@@ -37,33 +52,6 @@ class GamesOfLifeController < ApplicationController
   private
   def handle_file_upload(file)
     @game_state = GameOfLife::GameState.new file.tempfile
-    @game_state.custom_pretty_print
-  end
-
-  def handle_file_read
-    begin
-      file = file_post_params
-    rescue ActionController::ParameterMissing
-      @message = "File is required"
-      respond_to do |format|
-        format.turbo_stream { render "error_msg" }
-      end
-      return false
-    end
-    file
-  end
-
-  def handle_file_upload_error(file)
-    begin
-      handle_file_upload file
-    rescue GameOfLife::FileValidationError => e
-      @message = e.message
-      respond_to do |format|
-        format.turbo_stream { render "error_msg" }
-      end
-      return false
-    end
-    true
   end
 
   def file_post_params
