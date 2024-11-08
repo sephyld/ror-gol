@@ -1,6 +1,6 @@
 require_relative "../config/environment"
 
-gs = GameOfLife::GameState.new "script/state copy.txt"
+gs = GameOfLife::GameState.new "script/state.txt"
 
 gs.custom_pretty_print
 
