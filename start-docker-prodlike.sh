@@ -3,7 +3,7 @@
 WD=`pwd`
 
 rm $WD/config/credentials.yml.enc
-$WD/bin/rails credentials:edit
+$WD/bin/bundle && $WD/bin/rails credentials:edit
 
 docker build -t sephyld/ror-gol .
 
