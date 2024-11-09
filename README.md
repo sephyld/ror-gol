@@ -6,7 +6,7 @@ It uses turbo streams to compute the generations and update the view.
 
 ## Ruby and Rails versions
 
-The ruby version used is 3.3.5, while the rails version is 8.0.0-rc2.
+The ruby version used is 3.3.5, while the rails version is 8.0.0.rc2.
 
 ## Setup
 
@@ -24,7 +24,8 @@ rm config/master.key
 bin/rails credentials:edit
 ```
 
-Care: the file `credentials.yml.enc` is in source control.
+> [!WARNING]  
+> Care: the file `credentials.yml.enc` is in source control.
 
 To setup the database, run
 
@@ -45,8 +46,18 @@ bin/rails test
 To run the app in dev mode
 
 ```sh
+bin/rails tailwindcss:build
+bin/rails server
+```
+
+Or, more simply, run
+
+```sh
 bin/dev
 ```
+
+> [!IMPORTANT]  
+> In some cases the rails dev server might start before tailwindcss:watch has finished its first build and you might encounter the error "Propshaft::MissingAssetError". In that case, simply wait until the first tailwindcss build has finished and reload the page.
 
 ## Running with docker
 
@@ -57,8 +68,11 @@ A production Dockerfile is provided with Rails itself, but I've also added a she
 Simply run
 
 ```sh
-sh start/docker/prodlike.sh
+sh start-docker-prodlike.sh
 ```
+
+> [!IMPORTANT]  
+> The shell script maps port 80 on the docker container to the hosts port 80. If you have that port already in use on your machine (maybe by a web server, for example) you can edit the file so that it maps the container port 80 to another host port. For example, you could edit the last line like this `docker run -p 3000:80 -e RAILS_MASTER_KEY="$KEY" -e SSL_FORCE="false" sephyld/ror-gol` in order to map it to the port 3000.
 
 ## Using the application
 
@@ -93,11 +107,11 @@ You can edit the `script/state.txt` file and run
 ruby script/play.rb
 ```
 
-This is a looping console application that computes the next generation and prints in loop until stopped.
+This is a looping console application that computes the next generation and prints the grid in loop until stopped.
 
 ## Some additional considerations
 
-### "Slimmer" state
+### A "slimmer" state
 
 The way I've decided to represent the game of life's state is by having a grid field. The grid contains alive cells and dead cells, however, I think something else could be done.
 
